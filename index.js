@@ -261,6 +261,19 @@ When asked to find jobs:
     );
 
     const data = await response.json();
+
+    console.log("AI RAW RESPONSE:", JSON.stringify(data, null, 2));
+
+    // SAFETY CHECK
+    if (!data.choices || !data.choices[0]) {
+      console.error("❌ Invalid AI response:", data);
+
+      return res.status(500).json({
+        error: "AI response failed",
+        details: data,
+      });
+    }
+
     const choice = data.choices[0];
 
     console.log(`📥 AI response — finish_reason: ${choice.finish_reason}`);
