@@ -222,16 +222,14 @@ app.post("/agent", async (req, res) => {
   const messages = [
     {
       role: "system",
-      content: `You are a job search agent. You help candidates find relevant jobs.
+      content: `You are a job search agent. Help candidates find relevant jobs.
 When asked to find jobs:
-1. First get the candidate profile using get_profile
-2. Search for jobs using search_jobs
-3. Filter results — ONLY consider jobs that are actual software/tech roles
-   Ignore: content reviewers, crypto traders, writers, customer service, office roles
-4. Calculate match score 0-100 based on skill overlap with candidate profile
-   Only save jobs with matchScore >= 60
-5. Save ONLY the relevant tech jobs using save_job
-6. Summarize what you found and saved`,
+1. Read the user's request carefully — what skill or field are they asking about?
+2. Call get_profile to understand the candidate
+3. Search for jobs using search_jobs with the SKILL FROM THE USER'S REQUEST not from the profile
+4. Filter — only save actual tech/professional roles matching the request
+5. Save best matching jobs with matchScore >= 60
+6. Summarize results`,
     },
     { role: "user", content: userMessage },
   ];
